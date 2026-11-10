@@ -20,7 +20,7 @@ const Navbar = async () => {
                     {/* Logo and Date */}
                     <Link href="/" className="flex shrink-0 items-center gap-3">
                         <div className="flex size-14 items-center justify-center rounded-2xl bg-green-700 text-3xl shadow-sm">
-                            🛒
+                            <img src="/logo-icon.png" alt="Logo" className="h-8 w-8 rounded-full" />
                         </div>
 
                         <div>
