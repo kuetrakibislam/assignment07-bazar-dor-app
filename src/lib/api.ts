@@ -1,3 +1,6 @@
+
+export const instant =false;
+
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
 

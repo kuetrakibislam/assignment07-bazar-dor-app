@@ -2,6 +2,8 @@ import HeroSection from "@/components/home/HeroSection";
 import ProductSection from "@/components/home/ProductSection";
 import { getProducts } from "@/lib/api";
 
+export const instant = false;
+
 export default async function Home() {
   const products = await getProducts();
   return (

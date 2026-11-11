@@ -7,6 +7,8 @@ import Navbar from "@/components/shared/Navbar";
 import CategoryNav from "@/components/shared/CategoryNav";
 import { getCategories, getProducts } from "@/lib/api";
 import PriceTicker from "@/components/shared/PriceTicker";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title:"বাজার দর | Bazar Dor",
+  title: "বাজার দর | Bazar Dor",
   description: "Bazar Dor",
 };
 
@@ -36,15 +38,18 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        
+
         <Navbar />
         <CategoryNav categories={categories} />
         <PriceTicker products={products}></PriceTicker>
         <main>
           {children}
         </main>
-        
-        </body>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+        />
+      </body>
     </html>
   );
 }

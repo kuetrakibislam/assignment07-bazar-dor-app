@@ -10,14 +10,14 @@ const signInPage = () => {
              try {
                 const formData = new FormData(e.currentTarget);
     
-                // Extract form values safely
-                const email = String(formData.get("email") ?? "").trim();
-                const password = String(formData.get("password") ?? "");
+                const data = Object.fromEntries(formData.entries());
     
                 // Better Auth signin
                 const { data: resData, error } = await signIn.email({
-                    email,
-                    password,
+                    email: data.email as string,
+                    password: data.password as string,
+                    rememberMe: true,
+                    callbackURL: "/", // Redirect to homepage after successful sign-in
                 });
     
                 if (error) {

@@ -4,6 +4,7 @@ import React from 'react';
 
 import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { signUp } from '@/lib/auth-client';
+import { toast } from 'react-toastify';
 
 
 
@@ -21,21 +22,29 @@ const signUpPage = () => {
             const password = String(formData.get("password") ?? "");
 
             // Better Auth signup
-            const { data: resData, error } = await signUp.email({
+            const { data : resdata, error } = await signUp.email({
                 name,
                 email,
                 password,
+                callbackURL: "/signin"
             });
 
             if (error) {
-                console.error("Sign-up Error:", error);
+                if (error.code === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL") {
+                toast.error(
+                    "এই Email দিয়ে ইতোমধ্যে Account তৈরি করা হয়েছে। Login করুন।"
+                );
+                return;
+                }
+                toast.error(error.message || "Sign Up Failed");
                 return;
             }
 
-            console.log("Sign-up Response:", resData);
+            toast.success("Account created successfully!");
 
         } catch (error) {
-            console.error("Unexpected Error:", error);
+            toast.error("Something went wrong!");
+            console.error(error);
         }       
     };
 
