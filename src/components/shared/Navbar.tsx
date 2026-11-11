@@ -1,8 +1,45 @@
-
+'use client';
+import { signOut, useSession } from '@/lib/auth-client';
 import Link from 'next/link';
 
-const Navbar = async () => {
-    
+const Navbar = () => {
+
+    const { data: session } = useSession();
+    console.log("user session :" + session);
+
+    const authLinks = <>
+
+        {
+            session?.user ? <>
+                {session.user.name}
+                <Link
+                    href="/"
+                    className="rounded-xl bg-red-500 px-5 py-3 text-base font-bold text-white shadow-md transition hover:bg-red-800"
+                    onClick={ () => signOut({ callbackURL: "/" }) }
+                >
+                    সাইন আউট
+                </Link>    
+            </> : 
+            
+            <>
+                <Link
+                    href="/signin"
+                    className="rounded-lg px-3 py-3 text-base font-semibold text-gray-800 transition hover:bg-green-50"
+                >
+                    সাইন ইন
+                </Link>
+
+                <Link
+                    href="/signup"
+                    className="rounded-xl bg-green-700 px-5 py-3 text-base font-bold text-white shadow-md transition hover:bg-green-800"
+                >
+                    সাইন আপ
+                </Link>
+            </>
+        }
+
+    </>
+
     const today = new Intl.DateTimeFormat("bn-BD", {
         weekday: "long",
         day: "numeric",
@@ -36,19 +73,7 @@ const Navbar = async () => {
 
                     {/* Authentication Buttons */}
                     <div className="flex shrink-0 items-center gap-3">
-                        <Link
-                            href="/signin"
-                            className="rounded-lg px-3 py-3 text-base font-semibold text-gray-800 transition hover:bg-green-50"
-                        >
-                            সাইন ইন
-                        </Link>
-
-                        <Link
-                            href="/signup"
-                            className="rounded-xl bg-green-700 px-5 py-3 text-base font-bold text-white shadow-md transition hover:bg-green-800"
-                        >
-                            সাইন আপ
-                        </Link>
+                        {authLinks}
                     </div>
 
                 </div>
